@@ -21,6 +21,9 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private GameObject _speedFab;
 
+    [SerializeField]
+    private GameObject _shieldFab;
+
     private bool _stopSpawning = false;
 
     void Start()
@@ -28,6 +31,7 @@ public class SpawnManager : MonoBehaviour
         StartCoroutine(SpawnRoutine());
         StartCoroutine(TripleShotSpawnRoutine());
         StartCoroutine(SpeedPowerUpRoutine());
+        StartCoroutine(ShieldPowerUpRoutine());
     }
 
     // Update is called once per frame
@@ -67,6 +71,13 @@ public class SpawnManager : MonoBehaviour
         GameObject newPowerUp = Instantiate(_speedFab, new Vector3(x, 7, 0), Quaternion.identity);
     }
 
+    public void ReSpawnShieldPowerUp()
+    {
+        float x = XGenerator();
+        GameObject newPowerUp = Instantiate(_shieldFab, new Vector3(x, 7, 0), Quaternion.identity);
+        newPowerUp.transform.parent = this.transform;
+    }
+
     IEnumerator SpawnRoutine()
     {
         
@@ -98,6 +109,15 @@ public class SpawnManager : MonoBehaviour
             
             yield return new WaitForSeconds(Random.Range(7, 25));
             ReSpawnTripleShotPowerUp();
+        }
+    }
+
+    IEnumerator ShieldPowerUpRoutine()
+    {
+        while (!_stopSpawning)
+        {
+            yield return new WaitForSeconds(Random.Range(7, 25));
+            ReSpawnShieldPowerUp();
         }
     }
 

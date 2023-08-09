@@ -51,7 +51,7 @@ public class Powerup : MonoBehaviour
                         player.setIsSpeedActive();
                         break;
                     case 2:
-                        Debug.Log("Shield power is activated");
+                        player.setIsShieldActive();
                         break;
                     default:
                         Debug.Log("Default Value");

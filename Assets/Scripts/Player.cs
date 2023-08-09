@@ -23,6 +23,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _tripleShotPrefab;
 
+ 
+
     private SpawnManager _spawnManager;
 
     [SerializeField]
@@ -30,6 +32,9 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private bool _isSpeedActive = false;
+
+    [SerializeField]
+    private bool _isShieldActive = false;
     public int getLives()
     {
         return this._lives;
@@ -61,8 +66,8 @@ public class Player : MonoBehaviour
         }
 
         StartCoroutine(TripleShotRoutine());
-        StartCoroutine(SpeedPowerUpRoutine());
-        
+
+       
     }
 
     void CalculateMovement()
@@ -70,14 +75,17 @@ public class Player : MonoBehaviour
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
-        //new Vector3(1,0,0)
-        //  transform.Translate(Vector3.left * horizontalInput * _speed * Time.deltaTime);
-        // transform.Translate(Vector3.up * verticalInput * _speed * Time.deltaTime);
+       
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
-        transform.Translate(direction * _speed * Time.deltaTime);
+        
 
-        // if player position on the Y > 0
-        // y position = 0;
+        
+             transform.Translate(direction * _speed  * Time.deltaTime);
+
+
+        
+
+
 
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.8f, 0), 0);
        
@@ -114,6 +122,13 @@ public class Player : MonoBehaviour
 
     public void Damage()
     {
+
+        if (_isShieldActive == true)
+        {
+            _isShieldActive = false;
+            transform.GetChild(0).gameObject.SetActive(false);
+            return;
+        }
         _lives--;
         if(_lives < 1)
         {
@@ -128,20 +143,30 @@ public class Player : MonoBehaviour
         
     }
 
+    public void setIsShieldActive()
+    {
+        _isShieldActive = true;
+        transform.GetChild(0).gameObject.SetActive(true);
+        
+    }
+
     public void setIsSpeedActive()
     {
         
         _isSpeedActive = true;
         _speed = _speed * _speedMultiplier;
+        StartCoroutine(SpeedPowerUpRoutine());
     }
 
+  
     IEnumerator SpeedPowerUpRoutine()
     {
         while (_isSpeedActive)
         {
             
             yield return new WaitForSeconds(5);
-            _speed = 3.5f;
+            _isSpeedActive = false;
+            _speed /= _speedMultiplier;
         }
     }
 
