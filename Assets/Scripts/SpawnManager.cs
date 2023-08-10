@@ -7,8 +7,8 @@ public class SpawnManager : MonoBehaviour
     // Start is called before the first frame update
     [SerializeField]
     private GameObject _enemyFab;
-    private float minX = -8f;
-    private float maxX = 8f;
+    private float minX = -6f;
+    private float maxX = 12f;
     [SerializeField]
     private GameObject _enemyContainer;
 
@@ -73,6 +73,7 @@ public class SpawnManager : MonoBehaviour
 
     public void ReSpawnShieldPowerUp()
     {
+        
         float x = XGenerator();
         GameObject newPowerUp = Instantiate(_shieldFab, new Vector3(x, 7, 0), Quaternion.identity);
         newPowerUp.transform.parent = this.transform;
@@ -123,10 +124,7 @@ public class SpawnManager : MonoBehaviour
 
    
 
-    public void setStopSpawning(bool _stopSpawning)
-    {
-        this._stopSpawning = _stopSpawning;
-    }
+   
 
     public void onPlayerDeath()
     {

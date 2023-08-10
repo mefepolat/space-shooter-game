@@ -8,8 +8,8 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private float _speed = 4f;
     
-    private float minX = -8f;
-    private float maxX = 8f;
+    private float minX = -6f;
+    private float maxX = 12f;
 
     private Player _player;
 
@@ -72,6 +72,7 @@ public class Enemy : MonoBehaviour
         if(other.tag == "Laser")
         {
             Destroy(this.gameObject);
+            _player.increaseScore(10);
             Destroy(other.gameObject);
             
         }  
