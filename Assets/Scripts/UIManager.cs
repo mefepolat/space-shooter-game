@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -14,15 +15,29 @@ public class UIManager : MonoBehaviour
     private Sprite[] _liveSprites;
     [SerializeField]
     private Text _gameOverText;
+    [SerializeField]
+    private Text _restartLevelText;
 
-    private bool isGameOver = false;
+    private GameManager _gameManager;
+
+    private bool _isGameOver = false;
     
     void Start()
     {
        
         _scoreText.text = "Score: " + 000;
         _gameOverText.gameObject.SetActive(false);
+        _restartLevelText.gameObject.SetActive(false);
+        _gameManager = GameObject.Find("Game_Manager").GetComponent<GameManager>();
+        if(_gameManager == null)
+        {
+            Debug.LogError("Game manager is null");
+        }
+    }
 
+    private void Update()
+    {
+       
     }
 
     public void UpdateScore(int playerScore)
@@ -36,17 +51,24 @@ public class UIManager : MonoBehaviour
         _livesImage.sprite = _liveSprites[currentLives];
         if(currentLives == 0)
         {
-            _gameOverText.gameObject.SetActive(true);
-            isGameOver = true;
-            StartCoroutine(FlickerGameOverTextRoutine());
+            GameOverSequence();
+            
         }
     }
 
+    void GameOverSequence()
+    {
+        _gameManager.GameOver();
+        _gameOverText.gameObject.SetActive(true);
+        _restartLevelText.gameObject.SetActive(true);
+        _isGameOver = true;
+        StartCoroutine(FlickerGameOverTextRoutine());
+    }
 
 
     IEnumerator FlickerGameOverTextRoutine()
     {
-        while (isGameOver)
+        while (_isGameOver)
         {
 
             _gameOverText.text = "GAME OVER";
