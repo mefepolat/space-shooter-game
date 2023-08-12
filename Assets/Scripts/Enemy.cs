@@ -15,10 +15,21 @@ public class Enemy : MonoBehaviour
 
     [SerializeField]
     private GameObject _enemyFab;
+
+    private Animator _animator;
     void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
-       
+        if(_player == null)
+        {
+            Debug.Log("PLAYER IS NULL");
+        }
+        _animator = gameObject.GetComponent<Animator>();
+
+        if (_animator == null)
+        {
+            Debug.Log("animator is null");
+        }
     }
 
     
@@ -68,10 +79,13 @@ public class Enemy : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D other)
     {
-        
-        if(other.tag == "Laser")
+        BoxCollider2D boxCollider = this.gameObject.GetComponent<BoxCollider2D>();
+        if (other.tag == "Laser")
         {
-            Destroy(this.gameObject);
+            _animator.SetTrigger("OnEnemyDeath");
+            Destroy(this.gameObject, 2.8f);
+            
+            boxCollider.enabled = false;
             _player.increaseScore(10);
             Destroy(other.gameObject);
             
@@ -85,8 +99,9 @@ public class Enemy : MonoBehaviour
             if (player != null)
             {
                 other.transform.GetComponent<Player>().Damage();
-                
-                Destroy(this.gameObject);
+                _animator.SetTrigger("OnEnemyDeath");
+                boxCollider.enabled = false;
+                Destroy(this.gameObject, 2.8f);
                
                 
             }
@@ -95,7 +110,7 @@ public class Enemy : MonoBehaviour
             
             
         }
-        
+
         
     }
 }
