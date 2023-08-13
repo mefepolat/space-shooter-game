@@ -83,8 +83,8 @@ public class Enemy : MonoBehaviour
         if (other.tag == "Laser")
         {
             _animator.SetTrigger("OnEnemyDeath");
+            _speed = 0;
             Destroy(this.gameObject, 2.8f);
-            
             boxCollider.enabled = false;
             _player.increaseScore(10);
             Destroy(other.gameObject);
