@@ -24,6 +24,11 @@ public class Player : MonoBehaviour
     private GameObject _tripleShotPrefab;
     private SpawnManager _spawnManager;
     private UIManager _uiManager;
+    
+    [SerializeField]
+    private GameObject _rightEngine;
+    [SerializeField]
+    private GameObject _leftEngine;
 
     private bool _isTripleShotActive = false;
     private bool _isSpeedActive = false;
@@ -130,6 +135,15 @@ public class Player : MonoBehaviour
             return;
         }
         _lives--;
+        if(_lives == 2)
+        {
+            _rightEngine.SetActive(true);
+        }
+        if(_lives == 1)
+        {
+            _leftEngine.SetActive(true);
+        }
+        
         _uiManager.UpdateLives(_lives);
         if(_lives < 1)
         {

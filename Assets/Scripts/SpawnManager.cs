@@ -28,7 +28,18 @@ public class SpawnManager : MonoBehaviour
 
     void Start()
     {
+        
+      
+    }
+
+    public void StartSpawning()
+    {
         StartCoroutine(SpawnRoutine());
+        SpawnPowerUpRoutine();
+    }
+
+    void SpawnPowerUpRoutine()
+    {
         StartCoroutine(TripleShotSpawnRoutine());
         StartCoroutine(SpeedPowerUpRoutine());
         StartCoroutine(ShieldPowerUpRoutine());
@@ -81,8 +92,8 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator SpawnRoutine()
     {
-        
-        
+
+        yield return new WaitForSeconds(1.5f);
         while (!_stopSpawning)
         {
             ReSpawnEnemy();
