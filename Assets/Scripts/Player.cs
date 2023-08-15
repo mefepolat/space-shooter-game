@@ -30,6 +30,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _leftEngine;
 
+    [SerializeField]
+    private AudioSource _laserSound;
+
     private bool _isTripleShotActive = false;
     private bool _isSpeedActive = false;
     private bool _isShieldActive = false;
@@ -120,9 +123,9 @@ public class Player : MonoBehaviour
             Vector3 position = new Vector3(transform.position.x, transform.position.y + 1.011f, transform.position.z);
             Instantiate(_laserPrefab, position, Quaternion.identity);
         }
-        
 
-        
+
+        _laserSound.Play();
     }
 
     public void Damage()
