@@ -112,7 +112,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 3
-  _rotationSpeed: 3
   _asteroid: {fileID: 3900259145326045782}
   _explosion: {fileID: 1553325806128389863, guid: f6980ec31cee2b440b68e3346d7bad88,
+    type: 3}
+  _explosionSound: {fileID: 5336547793069703487, guid: bcc312be27299b84d8845b2aa55b8c3c,
     type: 3}

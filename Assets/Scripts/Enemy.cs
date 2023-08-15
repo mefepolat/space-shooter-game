@@ -13,14 +13,13 @@ public class Enemy : MonoBehaviour
 
     private Player _player;
 
-    [SerializeField]
-    private GameObject _enemyFab;
-
     private BoxCollider2D _boxCollider2D;
+    private AudioSource _audioSource;
 
     private Animator _animator;
     void Start()
     {
+        _audioSource = GetComponent<AudioSource>();
         _player = GameObject.Find("Player").GetComponent<Player>();
         if(_player == null)
         {
@@ -84,6 +83,7 @@ public class Enemy : MonoBehaviour
         
         if (other.tag == "Laser")
         {
+           
             _animator.SetTrigger("OnEnemyDeath");
             _speed = 0;
             Destroy(this.gameObject, 2.8f);
@@ -112,7 +112,7 @@ public class Enemy : MonoBehaviour
             
             
         }
-
+        _audioSource.Play();
         
     }
 }

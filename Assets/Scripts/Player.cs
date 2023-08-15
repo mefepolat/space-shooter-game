@@ -32,6 +32,7 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private AudioSource _laserSound;
+  
 
     private bool _isTripleShotActive = false;
     private bool _isSpeedActive = false;
@@ -153,6 +154,7 @@ public class Player : MonoBehaviour
            
             _spawnManager.onPlayerDeath();
             Destroy(this.gameObject);
+            
         }
     }
 

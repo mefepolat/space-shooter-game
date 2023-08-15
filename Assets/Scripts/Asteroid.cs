@@ -14,6 +14,7 @@ public class Asteroid : MonoBehaviour
 
     [SerializeField]
     private GameObject _explosion;
+    
 
     private SpawnManager _spawnManager;
     void Start()
@@ -38,12 +39,15 @@ public class Asteroid : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        
         if (collision.tag == "Laser")
         {
             Instantiate(_explosion, transform.position, Quaternion.identity);
             _spawnManager.StartSpawning();
             Destroy(this.gameObject, 0.25f);
             Destroy(collision.gameObject);
+            
         }
+        
     }
 }
